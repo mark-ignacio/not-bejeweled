@@ -93,7 +93,7 @@ class NotBejeweled:
             print('', row_letter)
 
         print('   ', '-' * (4 * self.x - 1), sep='')
-        print('   ', '   '.join(map(str, range(1, self.x + 1))))
+        print('   ', '   '.join(map(str, range(1, self.x + 1))), end='\n\n')
 
     def _get_move(self, cell_name):
         cell = input('{} cell to switch: '.format(cell_name)).strip()
@@ -111,7 +111,6 @@ class NotBejeweled:
         self.board[x1][y1] = cell_2_tmp
 
     def user_move(self):
-        print('\n')
         try:
             x1, y1 = self._get_move('First')
             if x1 >= self.x or y1 >= self.y:
