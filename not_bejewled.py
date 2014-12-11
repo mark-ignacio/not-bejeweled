@@ -15,6 +15,7 @@ class Gem(Enum):
     blue = 5
 
 
+# noinspection PyTypeChecker
 _gem_list = list(Gem)
 
 
@@ -202,17 +203,17 @@ class NotBejeweled:
         if center_x == 0:
             # top left
             if center_y == 0:
-                right = True
                 down = True
+                right = True
             # top right
             elif center_y == self.y - 1:
-                right = True
-                up = True
-            # bottom
-            else:
-                right = True
-                up = True
                 down = True
+                left = True
+            # top
+            else:
+                down = True
+                right = True
+                left = True
         elif center_x == self.x - 1:
             # bottom left
             if center_y == 0:
