@@ -4,10 +4,12 @@ import string
 from sys import platform
 from enum import Enum
 
+from colorama import Fore, init, deinit
+
 
 class Gem(Enum):
     red = 1
-    orange = 2
+    magenta = 2
     yellow = 3
     green = 4
     blue = 5
@@ -33,6 +35,9 @@ class NotBejeweled:
             for x in range(y):
                 row.append(random.choice(_gem_list))
             self.board.append(row)
+
+        # misc pretty things
+        self.header_spacing = ' ' * ((3 * (x+1)) - len('Not Bejeweled'))
 
     def play(self):
         # todo: optimize with board introspection
@@ -72,7 +77,7 @@ class NotBejeweled:
             os.system('cls')
         else:
             os.system('clear')
-        print('Not Bejeweled', '\t\t\t', 'Score:', self.score, end='\n\n')
+        print('Not Bejeweled', self.header_spacing, 'Score:', self.score, end='\n\n')
         print('   ', '   '.join(map(str, range(1, self.x + 1))))
         print('   ', '-' * (4 * self.x - 1), sep='')
         for i, row in enumerate(self.board):
@@ -80,7 +85,9 @@ class NotBejeweled:
             print(row_letter, '|', end='')
             for cell in row:
                 if cell is not None:
-                    print(' {} |'.format(cell.value), end='')
+                    # print gem
+                    gem_color = getattr(Fore, cell.name.upper())
+                    print(' {}*{} |'.format(gem_color, Fore.RESET), end='')
                 else:
                     print('   |', end='')
             print('', row_letter)
@@ -301,13 +308,9 @@ class NotBejeweled:
 
 
 def main():
-    # stdout = win32console.GetStdHandle(win32console.STD_OUTPUT_HANDLE)
-    # stdin = win32console.GetStdHandle(win32console.STD_INPUT_HANDLE)
-    # console = win32console.CreateConsoleScreenBuffer()
-    # console.SetConsoleActiveScreenBuffer()
-
-    # print out the 8x8 board
+    init()
     NotBejeweled(8, 8).play()
+    deinit()
 
 
 if __name__ == '__main__':
